@@ -1,0 +1,18 @@
+{
+    "url": "https://find-and-update.company-information.service.gov.uk/company/08209948",
+    "title": "! LTD",
+    "scrapedAt": "2026-10-19T23:45:44.207Z",
+    "company_number": "08209948",
+    "company_name": "! LTD",
+    "company_status": "active",
+    "company_type": "ltd",
+    "sic_codes": ["99999"],
+    "incorporated_on": "2012-09-11",
+    "accounts_overdue": false,
+    "address": {
+        "address_line_1": "9 PRINCES SQUARE",
+        "locality": "HARROGATE",
+        "postal_code": "HG1 1ND",
+        "country": "England"
+    }
+}
