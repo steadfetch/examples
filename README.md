@@ -8,5 +8,7 @@ Each folder shows how to call one Actor (Apify API, JavaScript and Python client
 
 - [`companies-house-monitor/`](companies-house-monitor/) — official UK company records as JSON
   ([Companies House](https://developer.company-information.service.gov.uk/))
+- [`sec-edgar-monitor/`](sec-edgar-monitor/) — official SEC EDGAR filing metadata as JSON
+  ([SEC EDGAR](https://www.sec.gov/edgar))
 
 Found a bug or need a field? Open an issue on the Actor page in the Apify Store.
