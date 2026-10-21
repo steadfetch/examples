@@ -1,0 +1,132 @@
+{
+  "name": "TED Tenders Scraper (EU Public Procurement Notices) — daily results to Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Setup (2 minutes)\n1. **Apify credential** — in the `Run the Actor` node create a *Header Auth* credential: header `Authorization`, value `Bearer YOUR_APIFY_TOKEN` (<https://console.apify.com/account/integrations>). The token lives in your n8n credential, never in this file.\n2. **Google Sheet** — in `Append rows to Google Sheet` paste your spreadsheet URL and tab name, and pick the Google credential n8n asks for.\n3. **Input** — edit the JSON body of `Run the Actor` (see the README), then activate.\n\nWorkflow by [Steadfetch](https://apify.com/steadfetch) — *web data that doesn't break*.",
+        "height": 340,
+        "width": 460,
+        "color": 5
+      },
+      "id": "ba6aaf7f-e2b6-5cac-85b4-150994b326dd",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -780,
+        -260
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "id": "ef708a80-5157-5bbc-b5bd-a4226bb64aff",
+      "name": "Every morning at 07:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -560,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/steadfetch~ted-tender-monitor/run-sync-get-dataset-items",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"query\": \"software\",\n  \"maxResults\": 100\n}",
+        "options": {
+          "timeout": 300000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "ba57dcb3-5410-5787-ab5a-5540b7317e54",
+      "name": "Run the Actor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -280,
+        0
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "parameters": {
+        "columns": {
+          "value": {},
+          "mappingMode": "autoMapInputData"
+        },
+        "options": {},
+        "operation": "append",
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Sheet1"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "https://docs.google.com/spreadsheets/d/PASTE_YOUR_SHEET_URL"
+        }
+      },
+      "id": "18bffc33-e031-5020-96f2-c46834e86b73",
+      "name": "Append rows to Google Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        0,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Every morning at 07:00": {
+      "main": [
+        [
+          {
+            "node": "Run the Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run the Actor": {
+      "main": [
+        [
+          {
+            "node": "Append rows to Google Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "active": false
+}
