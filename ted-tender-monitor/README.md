@@ -20,12 +20,35 @@ JSON: one dataset item per tender, schema-validated by the Actor before it is st
 
 ```json
 {
-  "query": "software",
-  "maxResults": 100
+  "source": "all",
+  "queries": [{ "text": "software" }],
+  "maxResults": 10,
+  "monitorMode": false
 }
 ```
 
-`query` is the free-text search (keyword or CPV description); `maxResults` caps the batch.
+`queries` is a list of free-text searches (keyword or CPV description); `maxResults` caps the batch. This is the Actor's official default input (read from the Apify API on 2026-10-28).
+
+## 1. API call (curl)
+
+```bash
+./api-call.sh                     # latest TED tenders matching "software"
+./api-call.sh "medical devices"   # any free-text query
+```
+
+## 2. JavaScript (Node.js)
+
+```bash
+npm install apify-client
+APIFY_TOKEN=... node example.js
+```
+
+## 3. Python
+
+```bash
+pip install apify-client
+APIFY_TOKEN=... python example.py
+```
 
 ## No-code
 
@@ -36,7 +59,7 @@ JSON: one dataset item per tender, schema-validated by the Actor before it is st
 1. Download [`n8n-workflow.json`](./n8n-workflow.json) and import it in n8n: **Workflow menu → Import from File**.
 2. Create a **Header Auth** credential named `Apify API token`: header name `Authorization`, value `Bearer <your token>` (copy the token from <https://console.apify.com/account/integrations>). Select it in the **Run the Actor** node. The token stays in your n8n credential — it is not in this repository.
 3. In **Append rows to Google Sheet**, paste your spreadsheet URL (share the sheet with the account n8n uses) and the tab name, and pick your Google Sheets credential.
-4. Open **Run the Actor** and adjust the input body — `query` is the free-text search (keyword or CPV description); `maxResults` caps the batch.
+4. Open **Run the Actor** and adjust the input body — `queries` is the list of free-text searches (keyword or CPV description); `maxResults` caps the batch.
 5. Activate the workflow. It runs daily at 07:00 (change the schedule on the first node) and appends one row per result, mapped automatically from the JSON fields.
 
 ### Make — step by step

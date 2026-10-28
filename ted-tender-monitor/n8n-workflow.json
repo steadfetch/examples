@@ -46,7 +46,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "{\n  \"query\": \"software\",\n  \"maxResults\": 100\n}",
+        "jsonBody": "{\n  \"source\": \"all\",\n  \"queries\": [{\"text\": \"software\"}],\n  \"maxResults\": 10,\n  \"monitorMode\": false\n}",
         "options": {
           "timeout": 300000,
           "response": {

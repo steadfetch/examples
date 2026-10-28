@@ -29,6 +29,27 @@ JSON: one dataset item per establishment, schema-validated by the Actor before i
 
 `region` is the local authority; switch `schemeType` to `FHIS` for Scotland.
 
+## 1. API call (curl)
+
+```bash
+./api-call.sh                 # establishments in Camden (FHRS)
+./api-call.sh Glasgow FHIS    # Scottish scheme (FHIS)
+```
+
+## 2. JavaScript (Node.js)
+
+```bash
+npm install apify-client
+APIFY_TOKEN=... node example.js
+```
+
+## 3. Python
+
+```bash
+pip install apify-client
+APIFY_TOKEN=... python example.py
+```
+
 ## No-code
 
 **Use case:** audit the hygiene ratings of every food business you monitor in a local authority, refreshed into Google Sheets each morning, with rating, rating date and coordinates for mapping or supplier due diligence.

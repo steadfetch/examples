@@ -23,12 +23,14 @@ The Apify token is a credential **you** paste into your own Make scenario; no to
 
 ```json
 {
-  "query": "software",
-  "maxResults": 100
+  "source": "all",
+  "queries": [{ "text": "software" }],
+  "maxResults": 10,
+  "monitorMode": false
 }
 ```
 
-`query` is the free-text search (keyword or CPV description); `maxResults` caps the batch.
+`queries` is a list of free-text searches (keyword or CPV description); `maxResults` caps the batch. This is the Actor's official default input (read from the Apify API on 2026-10-28).
 
 ## Notes
 
