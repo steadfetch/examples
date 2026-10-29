@@ -27,6 +27,27 @@ JSON: one dataset item per recall, schema-validated by the Actor before it is st
 
 `since` is the inclusive start of the recall-date range; runs are deduplicated by recall identifier, so a daily schedule only delivers new recalls.
 
+## 1. API call (curl)
+
+```bash
+./api-call.sh                    # recalls since 2026-10-01
+./api-call.sh 2026-01-01 200    # wider window, more results
+```
+
+## 2. JavaScript (Node.js)
+
+```bash
+npm install apify-client
+APIFY_TOKEN=... node example.js
+```
+
+## 3. Python
+
+```bash
+pip install apify-client
+APIFY_TOKEN=... python example.py
+```
+
 ## No-code
 
 **Use case:** catch new US product recalls that touch your catalogue the same morning they are published, into Google Sheets with hazard, remedy and affected units — deduplicated, so the sheet only grows with recalls you had not seen.
