@@ -44,8 +44,9 @@ filings. You keep a private watchlist; every run returns only what changed.
    A `company` target watches one register record. A `query` target is a saved search: every newly
    incorporated company that matches it becomes a `new_match`.
 
-2. Schedule `mode: "watch"` daily. The first watch run delivers a baseline; later runs deliver only
-   changes. An unchanged watch returns 0 events and bills one monitor-check, no events.
+2. Schedule `{"mode": "watch", "monitorMode": true}` daily. The first watch run delivers a baseline;
+   later runs deliver only changes. An unchanged watch returns 0 events and bills one monitor-check,
+   no events.
 
 3. One-off snapshot: `"monitorMode": false` delivers the current state of every stored watch as
    `new_match` without updating the watchlist or billing checks.
@@ -108,7 +109,7 @@ verification and `licence: "OGL v3"`.
 | `mode` | `watch` \| `manage` | Required. `watch` evaluates your watchlist and delivers delta events; `manage` edits the watchlist and pushes nothing. |
 | `manage` | object | When `mode=manage`: `action` (`add`, `remove` or `list`) and `targets` (company or query targets). |
 | `maxResults` | integer | Default 100, maximum 5000. Changes beyond the cap stay pending for the next run. |
-| `monitorMode` | boolean | Default `true`. `false` = one-off backfill of every stored watch, no check charges. |
+| `monitorMode` | boolean | Default `false` (one-off backfill of every stored watch, no check charges). Monitor mode — delta semantics plus one monitor-check per evaluated watch — is requested explicitly with `"monitorMode": true`. |
 | `apiKey` | string | Optional own free Companies House key (600 calls per 5 minutes per key). |
 | `strictSchema` | boolean | Default `true`; fail the run when an event does not match the output schema. |
 
