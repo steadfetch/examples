@@ -1,9 +1,9 @@
 {
-  "name": "UK Companies House Data Scraper (Company Records JSON) — daily results to Google Sheets",
+  "name": "UK Companies House Scraper (Risk, Charges & Filings) — daily delta events to Google Sheets",
   "nodes": [
     {
       "parameters": {
-        "content": "## Setup (2 minutes)\n1. **Apify credential** — in the `Run the Actor` node create a *Header Auth* credential: header `Authorization`, value `Bearer YOUR_APIFY_TOKEN` (<https://console.apify.com/account/integrations>). The token lives in your n8n credential, never in this file.\n2. **Google Sheet** — in `Append rows to Google Sheet` paste your spreadsheet URL and tab name, and pick the Google credential n8n asks for.\n3. **Input** — edit the JSON body of `Run the Actor` (see the README), then activate.\n\nWorkflow by [Steadfetch](https://apify.com/steadfetch) — *web data that doesn't break*.",
+        "content": "## Setup (3 minutes)\n1. **Watch targets (one-time)** — add what to watch before activating: run `./api-call.sh add` (see the README) or the manage call from the Actor's README. A `query` target is a saved search: every newly incorporated company that matches becomes a `new_match`.\n2. **Apify credential** — in the `Run the Actor` node create a *Header Auth* credential: header `Authorization`, value `Bearer YOUR_APIFY_TOKEN` (<https://console.apify.com/account/integrations>). The token lives in your n8n credential, never in this file.\n3. **Google Sheet** — in `Append rows to Google Sheet` paste your spreadsheet URL and tab name, and pick the Google credential n8n asks for.\n4. **Activate** — the daily run uses `mode: watch`, so only delta events arrive: new matches and watched-field changes, no repeats.\n\nWorkflow by [Steadfetch](https://apify.com/steadfetch) — *web data that doesn't break*.",
         "height": 340,
         "width": 460,
         "color": 5
@@ -46,7 +46,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "{\n  \"mode\": \"search\",\n  \"query\": \"software development\",\n  \"since\": \"2026-10-01\",\n  \"maxResults\": 100\n}",
+        "jsonBody": "{\n  \"mode\": \"watch\",\n  \"monitorMode\": true,\n  \"maxResults\": 100\n}",
         "options": {
           "timeout": 300000,
           "response": {

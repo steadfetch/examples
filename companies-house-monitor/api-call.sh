@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
-# Run steadfetch/companies-house-monitor and print the dataset items as JSON.
-#   ./api-call.sh                 # single company (00063903)
-#   ./api-call.sh search tesla    # register search, companies since 2025-01-01
+# Run steadfetch/companies-house-monitor and print the dataset items (delta events) as JSON.
+#   ./api-call.sh add        # one-time: add a company watch + a saved search (bills nothing)
+#   ./api-call.sh watch      # daily: evaluate the watchlist, deliver only changes
+#   ./api-call.sh snapshot   # one-off: backfill every stored watch (no check charges)
 set -euo pipefail
 
 : "${APIFY_TOKEN:?Set APIFY_TOKEN (https://console.apify.com/account/integrations)}"
 
-if [ "${1:-company}" = "search" ]; then
-  INPUT=$(printf '{"mode":"search","query":"%s","maxResults":100,"since":"2025-01-01"}' "${2:?query required}")
-else
-  INPUT='{"mode":"company","companyNumber":"00063903","maxResults":10}'
-fi
+case "${1:-watch}" in
+  add)
+    INPUT='{"mode":"manage","manage":{"action":"add","targets":[{"type":"company","company_number":"08209948"},{"type":"query","query":"renewable","since":"2026-01-01"}]}}'
+    ;;
+  snapshot)
+    INPUT='{"mode":"watch","monitorMode":false,"maxResults":100}'
+    ;;
+  *)
+    INPUT='{"mode":"watch","monitorMode":true,"maxResults":100}'
+    ;;
+esac
 
 curl -sS -X POST \
   "https://api.apify.com/v2/acts/steadfetch~companies-house-monitor/run-sync-get-dataset-items?token=${APIFY_TOKEN}" \

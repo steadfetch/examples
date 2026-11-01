@@ -18,7 +18,8 @@ No token, credential or personal data is stored in these files.
 
 ## Folders
 
-- [`companies-house-monitor/`](companies-house-monitor/) — official UK company records as JSON
+- [`companies-house-monitor/`](companies-house-monitor/) — delta events for watched UK companies:
+  new incorporations, status moves, insolvency and charges
   ([Companies House](https://developer.company-information.service.gov.uk/))
 - [`sec-edgar-monitor/`](sec-edgar-monitor/) — official SEC EDGAR filing metadata as JSON
   ([SEC EDGAR](https://www.sec.gov/edgar))

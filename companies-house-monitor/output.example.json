@@ -1,7 +1,23 @@
 {
+  "url": "https://find-and-update.company-information.service.gov.uk/company/08209948",
+  "title": "! LTD",
+  "scrapedAt": "2026-10-26T07:30:00.000Z",
+  "event_type": "risk_indicator",
+  "watch_id": "wl_08209948",
+  "company_number": "08209948",
+  "company_name": "! LTD",
+  "company_status": "active",
+  "previous_status": "active",
+  "detected_at": "2026-10-26T07:30:00.000Z",
+  "changed_fields": ["insolvency"],
+  "source_url": "https://find-and-update.company-information.service.gov.uk/company/08209948",
+  "licence": "OGL v3",
+  "risk_sub_type": "insolvency",
+  "risk_description": "New insolvency case detected (status: active)",
+  "record": {
     "url": "https://find-and-update.company-information.service.gov.uk/company/08209948",
     "title": "! LTD",
-    "scrapedAt": "2026-10-19T23:45:44.207Z",
+    "scrapedAt": "2026-10-26T07:30:00.000Z",
     "company_number": "08209948",
     "company_name": "! LTD",
     "company_status": "active",
@@ -10,9 +26,10 @@
     "incorporated_on": "2012-09-11",
     "accounts_overdue": false,
     "address": {
-        "address_line_1": "9 PRINCES SQUARE",
-        "locality": "HARROGATE",
-        "postal_code": "HG1 1ND",
-        "country": "England"
+      "address_line_1": "9 PRINCES SQUARE",
+      "locality": "HARROGATE",
+      "postal_code": "HG1 1ND",
+      "country": "England"
     }
+  }
 }
