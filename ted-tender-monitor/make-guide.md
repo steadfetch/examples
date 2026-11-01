@@ -39,7 +39,7 @@ The Apify token is a credential **you** paste into your own Make scenario; no to
 - Each run appends a fresh batch of rows. Where the Actor documents a monitor/deduplication mode,
   turn it on so only new records arrive; otherwise add a **Router + filter** on a stable identifier
   before the Google Sheets module if you do not want repeats.
-- Pricing: 2.00 USD per 1,000 tenders, plus 0.00005 USD per run start (source: the Actor's Store listing).
+- Pricing: $4.00 per 1,000 new rows, $1.00 per 1,000 records checked in monitor mode, plus a per-run start event (source: the Actor's Store listing).
 - Full input and output reference: the [Store listing](https://apify.com/steadfetch/ted-tender-monitor).
 
 Built by [Steadfetch](https://apify.com/steadfetch) — *web data that doesn't break*.
