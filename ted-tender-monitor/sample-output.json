@@ -1,0 +1,16 @@
+{
+  "source": "usaspending",
+  "noticeId": "CONT_AWD_36C25024F0188_3600_47QTCA19D00MV_4732",
+  "title": "GEO TAB - SAGINAW",
+  "buyer": "Department of Veterans Affairs",
+  "country": "US",
+  "cpv": [],
+  "value": 13162,
+  "currency": "USD",
+  "publishedAt": "2023-12-01",
+  "deadlineAt": null,
+  "periodEndAt": "2024-11-30",
+  "url": "https://www.usaspending.gov/award/CONT_AWD_36C25024F0188_3600_47QTCA19D00MV_4732",
+  "firstSeenAt": "2026-10-19T12:00:00.000Z",
+  "scrapedAt": "2026-10-19T12:00:00.000Z"
+}

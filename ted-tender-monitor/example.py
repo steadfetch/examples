@@ -1,17 +1,16 @@
-import json
 import os
-
 from apify_client import ApifyClient
 
 client = ApifyClient(os.environ["APIFY_TOKEN"])
 
-run_input = {
-    "source": "all",
-    "queries": [{"text": "software"}],
-    "maxResults": 10,
-    "monitorMode": False,
-}
+run = client.actor("steadfetch/ted-tender-monitor").call(
+    run_input={
+        "source": "ted",
+        "queries": [{"text": "software", "countries": ["ES"], "minValueEur": 100000}],
+        "maxResults": 50,
+        "monitorMode": True,
+    }
+)
 
-run = client.actor("steadfetch/ted-tender-monitor").call(run_input=run_input)
-items = client.dataset(run["defaultDatasetId"]).list_items().items
-print(json.dumps(items, indent=2))
+for item in client.dataset(run["defaultDatasetId"]).iterate_items():
+    print(item)

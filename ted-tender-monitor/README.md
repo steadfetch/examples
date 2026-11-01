@@ -1,54 +1,34 @@
-# TED Tenders Scraper (EU Public Procurement Notices) — examples
+# steadfetch/ted-tender-monitor — examples
 
-> Apify Store title: **TED Tenders Scraper (EU Public Procurement Notices)**
+Monitor EU procurement notices (TED) and US federal contract awards
+(USAspending) as JSON. Delta-only: each run delivers only rows it has
+never delivered before.
 
-Run [`steadfetch/ted-tender-monitor`](https://apify.com/steadfetch/ted-tender-monitor) and get the results as
-JSON: one dataset item per tender, schema-validated by the Actor before it is stored.
+Store: https://apify.com/steadfetch/ted-tender-monitor
 
-- Store: <https://apify.com/steadfetch/ted-tender-monitor>
-- Source data: the official [TED](https://ted.europa.eu/) public procurement notices (Tenders Electronic Daily), buyer and procedure metadata only — personal contact fields are scrubbed.
-- Pricing: 2.00 USD per 1,000 tenders, plus 0.00005 USD per run start.
+## Files
 
-## Prerequisites
+- `api-call.sh` — plain REST call (run-sync endpoint), no SDK.
+- `example.js` — `apify-client` for Node.js.
+- `example.py` — `apify-client` for Python.
+- `sample-output.json` — real sample row (from the Actor's documented fixture).
+- `n8n-workflow.json` — n8n template: daily rows into Google Sheets.
+- `make-guide.md` — step-by-step Make guide.
 
-- An Apify account and token (<https://console.apify.com/account/integrations>). A free tier works.
-- The workflow in this folder calls the Actor through the Apify API
-  (`POST /v2/acts/steadfetch~ted-tender-monitor/run-sync-get-dataset-items`), so the same token works for
-  curl, JavaScript, Python and no-code tools.
+## Quick start
 
-## Example input
+Get a free API token at https://console.apify.com/settings/integrations,
+then export it: `export APIFY_TOKEN=...`
 
-```json
-{
-  "source": "all",
-  "queries": [{ "text": "software" }],
-  "maxResults": 10,
-  "monitorMode": false
-}
-```
+Example: software tenders from Spanish buyers, EUR 100k+:
 
-`queries` is a list of free-text searches (keyword or CPV description); `maxResults` caps the batch. This is the Actor's official default input (read from the Apify API on 2026-10-28).
+    source: "ted"
+    queries: [{ "text": "software", "countries": ["ES"], "minValueEur": 100000 }]
+    maxResults: 50
+    monitorMode: true
 
-## 1. API call (curl)
-
-```bash
-./api-call.sh                     # latest TED tenders matching "software"
-./api-call.sh "medical devices"   # any free-text query
-```
-
-## 2. JavaScript (Node.js)
-
-```bash
-npm install apify-client
-APIFY_TOKEN=... node example.js
-```
-
-## 3. Python
-
-```bash
-pip install apify-client
-APIFY_TOKEN=... python example.py
-```
+See the Actor page for the full input schema (cpv, agencies, naics, ...)
+and pricing ($4.00 per 1,000 new rows; 0 new rows = 0 result charges).
 
 ## No-code
 
