@@ -16,15 +16,21 @@ step-by-step `make-guide.md` for Make.
 
 No token, credential or personal data is stored in these files.
 
-## Folders
+## Spain and Canary Islands tourism
 
-- [`companies-house-monitor/`](companies-house-monitor/) — delta events for watched UK companies:
-  new incorporations, status moves, insolvency and charges
-  ([Companies House](https://developer.company-information.service.gov.uk/))
-- [`sec-edgar-monitor/`](sec-edgar-monitor/) — official SEC EDGAR filing metadata as JSON
-  ([SEC EDGAR](https://www.sec.gov/edgar))
+Start here: two Actors built for tourism data in Spain and the Canary Islands.
+
+- [`exceltur-indicadores-extractor/`](exceltur-indicadores-extractor/) — Spain tourism indicator
+  series ([Exceltur](https://www.exceltur.org/))
+- [`puerto-tenerife-cruceros-monitor/`](puerto-tenerife-cruceros-monitor/) — Tenerife cruise callings
+  (Autoridad Portuaria de Santa Cruz de Tenerife)
+
+## Other Actors on the Store
+
 - [`ted-tender-monitor/`](ted-tender-monitor/) — EU public procurement notices as JSON
   ([TED](https://ted.europa.eu/))
+- [`sec-edgar-monitor/`](sec-edgar-monitor/) — official SEC EDGAR filing metadata as JSON
+  ([SEC EDGAR](https://www.sec.gov/edgar))
 - [`uk-food-hygiene-monitor/`](uk-food-hygiene-monitor/) — UK food hygiene ratings as JSON
   ([Food Standards Agency](https://www.food.gov.uk/))
 - [`cpsc-recall-monitor/`](cpsc-recall-monitor/) — US product recalls as JSON
@@ -35,12 +41,11 @@ No token, credential or personal data is stored in these files.
   ([openFDA](https://open.fda.gov/))
 - [`recreation-gov-campground-extractor/`](recreation-gov-campground-extractor/) — campground records
   and campsite inventories ([Recreation.gov](https://www.recreation.gov/))
-- [`exceltur-indicadores-extractor/`](exceltur-indicadores-extractor/) — Spain tourism indicator
-  series ([Exceltur](https://www.exceltur.org/))
-- [`puerto-tenerife-cruceros-monitor/`](puerto-tenerife-cruceros-monitor/) — Tenerife cruise callings
-  (Autoridad Portuaria de Santa Cruz de Tenerife)
+- [`companies-house-monitor/`](companies-house-monitor/) — delta events for watched UK companies
+  ([Companies House](https://developer.company-information.service.gov.uk/)). Being withdrawn from
+  the Store; the folder stays here for reference.
 
-`companies-house-monitor/` and `sec-edgar-monitor/` also include curl, JavaScript and Python
-examples plus a real sample output.
+Folders with `api-call.sh`, `example.js` and `example.py` (for example `ted-tender-monitor/`) show
+curl, JavaScript and Python calls, and some also ship a real sample output.
 
 Found a bug or need a field? Open an issue on the Actor page in the Apify Store.

@@ -11,6 +11,7 @@ SCHEME="${2:-FHRS}"
 INPUT=$(printf '{"region":"%s","maxResults":100,"schemeType":"%s","strictSchema":true}' "${REGION}" "${SCHEME}")
 
 curl -sS -X POST \
-  "https://api.apify.com/v2/acts/steadfetch~uk-food-hygiene-monitor/run-sync-get-dataset-items?token=${APIFY_TOKEN}" \
+  "https://api.apify.com/v2/acts/steadfetch~uk-food-hygiene-monitor/run-sync-get-dataset-items" \
+  -H "Authorization: Bearer ${APIFY_TOKEN}" \
   -H "Content-Type: application/json" \
   -d "${INPUT}"
