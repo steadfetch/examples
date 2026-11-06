@@ -20,6 +20,7 @@ case "${1:-watch}" in
 esac
 
 curl -sS -X POST \
-  "https://api.apify.com/v2/acts/steadfetch~companies-house-monitor/run-sync-get-dataset-items?token=${APIFY_TOKEN}" \
+  "https://api.apify.com/v2/acts/steadfetch~companies-house-monitor/run-sync-get-dataset-items" \
+  -H "Authorization: Bearer ${APIFY_TOKEN}" \
   -H "Content-Type: application/json" \
   -d "${INPUT}"

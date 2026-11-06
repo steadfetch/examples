@@ -11,6 +11,7 @@ MAXRESULTS="${2:-100}"
 INPUT=$(printf '{"since":"%s","maxResults":%s,"monitorMode":false}' "${SINCE}" "${MAXRESULTS}")
 
 curl -sS -X POST \
-  "https://api.apify.com/v2/acts/steadfetch~cpsc-recall-monitor/run-sync-get-dataset-items?token=${APIFY_TOKEN}" \
+  "https://api.apify.com/v2/acts/steadfetch~cpsc-recall-monitor/run-sync-get-dataset-items" \
+  -H "Authorization: Bearer ${APIFY_TOKEN}" \
   -H "Content-Type: application/json" \
   -d "${INPUT}"
