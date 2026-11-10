@@ -39,7 +39,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RAMA: ${{ github.head_ref }}
           TITULO: ${{ github.event.pull_request.title }}
-        run: node "$RUNNER_TEMP/calidad-pr.mjs" una-pr --pr "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" --rama "$RAMA" --titulo "$TITULO"
+        run: node "$RUNNER_TEMP/calidad-pr.mjs" una-pr --base "$BASE" --pr "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" --rama "$RAMA" --titulo "$TITULO"
       - name: Tamaño
         run: node "$RUNNER_TEMP/calidad-pr.mjs" tamano --base "$BASE" --head "$HEAD"
       - name: Archivos prohibidos

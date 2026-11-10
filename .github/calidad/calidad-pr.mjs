@@ -111,6 +111,10 @@ function configDe(base) {
   try { return JSON.parse(git("show", base + ":.github/calidad/config.json")); } catch { return { ambitos: [] }; }
 }
 
+function tieneConfig(sha) {
+  try { git("cat-file", "-e", sha + ":.github/calidad/config.json"); return true; } catch { return false; }
+}
+
 function cambiados(base, head) {
   return git("diff", "--name-only", "--diff-filter=ACMR", base, head).split("\n").filter(Boolean);
 }
@@ -194,5 +198,9 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const [cmd, ...resto] = process.argv.slice(2);
   const fn = COMPROBACIONES[cmd];
   if (!fn) { console.error("Uso: calidad-pr.mjs <" + Object.keys(COMPROBACIONES).join("|") + "> --base <sha> --head <sha>"); process.exit(2); }
-  process.exitCode = fn(opciones(resto));
+  const o = opciones(resto);
+  // El gate es de los repos donde escriben agentes: los que tienen su configuración en la base. El resto lo recibe
+  // con la plantilla pero no lo usa (paperclip, examples).
+  if (o.base && !tieneConfig(o.base)) { ok("este repo no usa el gate (no hay .github/calidad/config.json)"); process.exit(0); }
+  process.exitCode = fn(o);
 }
