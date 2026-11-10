@@ -2,3 +2,9 @@
 .env*
 .paperclip-runtime/
 node_modules/
+.claude/memory/corrections.jsonl
+.claude/memory/observations.jsonl
+.claude/memory/sessions.jsonl
+.claude/memory/violations.jsonl
+.claude/settings.local.json
+.superpowers/
