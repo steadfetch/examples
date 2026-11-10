@@ -8,7 +8,7 @@
       "sha256": "eabe027d2b9682f180ccc57907a4cb5770b029100fac078c0fe3ccf0834d3cb3"
     },
     ".claude/VERSION": {
-      "sha256": "59854984853104df5c353e2f681a15fc7924742f9a2e468c29af248dce45ce03"
+      "sha256": "1575e1af4a95f12f70b4ee6a6adce8160953d93ea17dc2611b90883ccc3ad3b8"
     },
     ".claude/agents/reviewer.md": {
       "sha256": "6fd18b6c65ef90a4a2053c5840068fc738f89429277a0747473b53206133cc78"
@@ -236,6 +236,6 @@
     ".claude/skills/security-review/SKILL.md",
     ".claude/skills/security-review/cloud-infrastructure-security.md"
   ],
-  "template_commit": "abf7246e3d6b4c9100d7c5dd1820b8d75e9cdaa8",
-  "version": "1.0.0"
+  "template_commit": "1e9b54a79a6387f25826f3471b6645a8c9fbbf42",
+  "version": "1.1.0"
 }
