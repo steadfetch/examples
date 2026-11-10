@@ -4,11 +4,7 @@ Las reglas universales de Steadfetch viven en `.claude/rules/sf-*.md`. Las gesti
 
 ## Comandos del proyecto
 
-<!-- Rellenar con los comandos reales. -->
-- Arrancar: `<comando>`
-- Tests: `<comando>`
-- Lint: `<comando>`
-- Typecheck: `<comando>`
+Sin build ni tests: cada carpeta es un ejemplo de un Actor (`README.md`, `api-call.sh`, `example.js`, `example.py`, plantillas `n8n-workflow.json` y `make-guide.md`).
 
 ## Fuentes de verdad
 
