@@ -1,0 +1,50 @@
+# Gate común de las PRs (calidad del código de los agentes, 10-11). Lo gestiona steadfetch/ai-template:
+# no se edita en el repo destino. Cada repo describe sus tests en .github/calidad/config.json.
+name: calidad-pr
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  calidad-pr:
+    # Solo en los repos destino; los PR del sync de la plantilla no llevan STE y son grandes por naturaleza (D-14).
+    if: github.repository != 'steadfetch/ai-template' && github.head_ref != 'chore/sync-plantilla-ia'
+    runs-on: "${{ vars.CI_RUNNER_LABEL || 'ubuntu-latest' }}"
+    timeout-minutes: 30
+    env:
+      BASE: ${{ github.event.pull_request.base.sha }}
+      HEAD: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # El script sale de la base: una PR no puede cambiar cómo se la comprueba.
+      - name: Script del gate desde la base
+        run: |
+          if git show "$BASE:.github/calidad/calidad-pr.mjs" > "$RUNNER_TEMP/calidad-pr.mjs" 2>/dev/null; then
+            echo "script de la base"
+          else
+            cp .github/calidad/calidad-pr.mjs "$RUNNER_TEMP/calidad-pr.mjs"
+            echo "::notice::la base aún no tiene el gate: se usa el de la PR"
+          fi
+      - name: Una PR por tarea
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RAMA: ${{ github.head_ref }}
+          TITULO: ${{ github.event.pull_request.title }}
+        run: node "$RUNNER_TEMP/calidad-pr.mjs" una-pr --pr "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" --rama "$RAMA" --titulo "$TITULO"
+      - name: Tamaño
+        run: node "$RUNNER_TEMP/calidad-pr.mjs" tamano --base "$BASE" --head "$HEAD"
+      - name: Archivos prohibidos
+        run: node "$RUNNER_TEMP/calidad-pr.mjs" prohibidos --base "$BASE" --head "$HEAD"
+      - name: Asserts borrados o cambiados (aviso para el Revisor)
+        run: node "$RUNNER_TEMP/calidad-pr.mjs" asserts --base "$BASE" --head "$HEAD"
+      - name: Los tests de la PR fallan sin el cambio
+        run: node "$RUNNER_TEMP/calidad-pr.mjs" rojo --base "$BASE" --head "$HEAD"
