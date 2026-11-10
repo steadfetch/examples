@@ -8,7 +8,7 @@
       "sha256": "eabe027d2b9682f180ccc57907a4cb5770b029100fac078c0fe3ccf0834d3cb3"
     },
     ".claude/VERSION": {
-      "sha256": "1e5b51cde515396a9fa762909cf8ca6584ccc564b325d2eebeea76175fe95c4d"
+      "sha256": "6cf4e084b47f33c9b02ef79279d157833868f8f70514169a768be353ee328fea"
     },
     ".claude/agents/reviewer.md": {
       "sha256": "6fd18b6c65ef90a4a2053c5840068fc738f89429277a0747473b53206133cc78"
@@ -176,10 +176,10 @@
       "sha256": "7d9a83852475a9396e04c59c73df84ac24ee0f41322016de7c11c62138c2a8ca"
     },
     ".github/calidad/calidad-pr.mjs": {
-      "sha256": "7ae8c8b2bc80f9897c2dec8270f2da2e053bdf91da8d2e07ef03c5593672ae75"
+      "sha256": "62de92c436516dca6b2ccf7a52acbd8a80ab99ef7aafd3bd48b726a2e528e088"
     },
     ".github/workflows/sf-calidad-pr.yml": {
-      "sha256": "ffcfe10fc4a257fa9b66d93ab61ad5dafa6b7a98c42ee22b443ecc9791189c86"
+      "sha256": "1794db15a9225beb9defc816d1bdf05314e3b10f0ed3e1a94fa407e305925a77"
     }
   },
   "managed_files": [
@@ -244,6 +244,6 @@
     ".github/calidad/calidad-pr.mjs",
     ".github/workflows/sf-calidad-pr.yml"
   ],
-  "template_commit": "c513f172175bc256797a50bce396f281f7fb82ed",
-  "version": "1.2.0"
+  "template_commit": "837409da7dcac7e8f97933997f712bb9235db200",
+  "version": "1.2.1"
 }
