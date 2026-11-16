@@ -39,9 +39,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RAMA: ${{ github.head_ref }}
           TITULO: ${{ github.event.pull_request.title }}
-        run: node "$RUNNER_TEMP/calidad-pr.mjs" una-pr --base "$BASE" --pr "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" --rama "$RAMA" --titulo "$TITULO"
+          # Los autores de la Junta abren PR sin tarea de Paperclip y a veces grandes: la Junta fija su lista en una variable que solo cambia un administrador. Sin variable, nadie está exento. Cuenta quien abre la PR, no quien firma los commits.
+          AUTOR: ${{ github.event.pull_request.user.login }}
+          EXENTOS: ${{ vars.CALIDAD_AUTORES_JUNTA }}
+        run: node "$RUNNER_TEMP/calidad-pr.mjs" una-pr --base "$BASE" --pr "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" --rama "$RAMA" --titulo "$TITULO" --autor "$AUTOR" --exentos "$EXENTOS"
       - name: Tamaño
-        run: node "$RUNNER_TEMP/calidad-pr.mjs" tamano --base "$BASE" --head "$HEAD"
+        env:
+          AUTOR: ${{ github.event.pull_request.user.login }}
+          EXENTOS: ${{ vars.CALIDAD_AUTORES_JUNTA }}
+        run: node "$RUNNER_TEMP/calidad-pr.mjs" tamano --base "$BASE" --head "$HEAD" --autor "$AUTOR" --exentos "$EXENTOS"
       - name: Archivos prohibidos
         run: node "$RUNNER_TEMP/calidad-pr.mjs" prohibidos --base "$BASE" --head "$HEAD"
       - name: Asserts borrados o cambiados (aviso para el Revisor)

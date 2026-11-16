@@ -28,6 +28,15 @@ export function steDe(rama, titulo) {
   return m ? "STE-" + m[1] : null;
 }
 
+// La exención va por quien abrió la PR (user.login), no por quien firma los commits.
+// Autores de la Junta dispensados del número de tarea y del tope de tamaño. `exentos` es el texto de la variable
+// CALIDAD_AUTORES_JUNTA (logins separados por comas o espacios). Un bot nunca se exenta: los agentes siguen el gate.
+export function autorExento(autor, exentos) {
+  const login = String(autor ?? "").trim().toLowerCase();
+  if (!login || login.endsWith("[bot]")) return false;
+  return String(exentos ?? "").toLowerCase().split(/[\s,]+/).filter(Boolean).includes(login);
+}
+
 // El ámbito de un archivo es la carpeta más larga que encaja con la `raiz` de algún ámbito.
 function ambitoDe(ruta, ambitos) {
   const partes = ruta.split("/");
@@ -153,13 +162,14 @@ function rojo({ base, head }) {
   return motivos.length ? falla(motivos) : ok("los tests de la PR fallan sin el cambio");
 }
 
-function tamano({ base, head }) {
+function tamano({ base, head, autor, exentos }) {
   const mb = git("merge-base", base, head).trim();
   const filas = git("diff", "--numstat", mb, head).split("\n").filter(Boolean).map((l) => {
     const [añadidas, borradas, ruta] = l.split("\t");
     return { ruta, añadidas, borradas };
   });
   const t = contarTamano(filas, configDe(mb));
+  if (autorExento(autor, exentos)) return ok(`${t.archivos} archivos y ${t.lineas} líneas; ${autor} es autor de la Junta y no tiene tope de tamaño`);
   if (t.archivos > 15 || t.lineas > 800) return falla([`${t.archivos} archivos y ${t.lineas} líneas: el máximo es 15 archivos y 800 líneas (parte la tarea)`]);
   return ok(`${t.archivos} archivos y ${t.lineas} líneas`);
 }
@@ -180,11 +190,14 @@ function asserts({ base, head }) {
   return 0;
 }
 
-function unaPr({ pr, repo, rama, titulo }) {
+const listarAbiertas = (repo) => JSON.parse(execFileSync("gh", ["pr", "list", "--repo", repo, "--state", "open", "--json", "number,headRefName,title", "--limit", "200"], { encoding: "utf8" }));
+
+// `listar` se inyecta para probar sin red.
+export function unaPr({ pr, repo, rama, titulo, autor, exentos }, listar = listarAbiertas) {
+  if (autorExento(autor, exentos)) return ok(`${autor} es autor de la Junta; no necesita número de tarea STE-<n> ni se comprueba si hay otra PR de la misma tarea`);
   const ste = steDe(rama, titulo);
   if (!ste) return falla(["la rama o el título tienen que llevar STE-<n>"]);
-  const abiertas = JSON.parse(execFileSync("gh", ["pr", "list", "--repo", repo, "--state", "open", "--json", "number,headRefName,title", "--limit", "200"], { encoding: "utf8" }));
-  const otras = abiertas.filter((p) => String(p.number) !== String(pr) && steDe(p.headRefName, p.title) === ste);
+  const otras = listar(repo).filter((p) => String(p.number) !== String(pr) && steDe(p.headRefName, p.title) === ste);
   if (otras.length) return falla([`${ste} ya tiene otra PR abierta: ${otras.map((p) => "#" + p.number).join(", ")}. Los cambios van a esa PR`]);
   return ok(`${ste}: una sola PR`);
 }
